@@ -41,8 +41,7 @@ class User(Base):
     posts = relationship("Post", backref="posts")
     likes = relationship("Like", backref="likes")
     messages = relationship("Message", backref="messages")
-
-
+    followed = relationship("Followed", backref="followed")
 
 class Post(Base):
     __tablename__ = "Post"
@@ -62,7 +61,16 @@ class Like(Base):
 class Message(Base):
     __tablename__ = "Message"
     id = Column(Integer, primary_key=True)
+
     user_id = Column(Integer, ForeignKey("user.id"))    
+
+class Followed(Base):
+    __tablename__ = "Follow"
+    id = Column(Integer, primary_key=True)
+    
+    user_id = Column(Integer, ForeignKey("user.id"))
+    followed_id = Column(Integer, ForeignKey("user.id"))
+
 
 ## Draw from SQLAlchemy base
 try:
