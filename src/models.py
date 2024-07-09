@@ -38,14 +38,25 @@ class User(Base):
     email = Column(String(50), unique=True, nullable=False)
     password = Column(String(100), nullable=False)
 
+    posts = relationship("Post", backref="posts")
+    likes = relationship("Like", backref="likes")
+
+
 
 class Post(Base):
     __tablename__ = "Post"
     id = Column(Integer, primary_key=True)
     title = Column(String(100))
     content = Column(String(500))
+    
+    user_id = Column(Integer, ForeignKey("user.id"))
+
+class Like(Base):
+    __tablename__ = "Like"
+    id = Column(Integer, primary_key=True)
     is_liked = Column(Boolean, default=False)
 
+    user_id = Column(Integer, ForeignKey("user.id"))
 
 
 ## Draw from SQLAlchemy base
