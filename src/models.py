@@ -40,6 +40,7 @@ class User(Base):
 
     posts = relationship("Post", backref="posts")
     likes = relationship("Like", backref="likes")
+    messages = relationship("Message", backref="messages")
 
 
 
@@ -58,6 +59,10 @@ class Like(Base):
 
     user_id = Column(Integer, ForeignKey("user.id"))
 
+class Message(Base):
+    __tablename__ = "Message"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("user.id"))    
 
 ## Draw from SQLAlchemy base
 try:
