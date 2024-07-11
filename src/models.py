@@ -1,11 +1,17 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean,  Enum as sqlalchemy_enum
 from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy import create_engine
 from eralchemy2 import render_er
+from enum import Enum
 
 Base = declarative_base()
+
+class RoleEnum(Enum):
+    ADMIN = "ADMIN"
+    USER = "USER"
+    PREMIUM = "PREMIUM"
 
 class User(Base):
     __tablename__ = "user"
@@ -16,6 +22,7 @@ class User(Base):
     lastname = Column(String(50), nullable=False)
     email = Column(String(50), unique=True, nullable=False)
     password = Column(String(100), nullable=False)
+    role = Column(sqlalchemy_enum(RoleEnum))
 
     posts = relationship("Post", backref="posts")
     likes = relationship("Like", backref="likes")
